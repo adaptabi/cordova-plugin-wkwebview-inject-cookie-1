@@ -31,6 +31,10 @@
     NSString *secure = command.arguments[4];
     NSString *maxAge = command.arguments[5];
     
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+
+    WKWebView* wkWebView = (WKWebView*) self.webView;
+    
     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
     [cookieProperties setObject:name forKey:NSHTTPCookieName];
     [cookieProperties setObject:value forKey:NSHTTPCookieValue];
@@ -40,6 +44,7 @@
     [cookieProperties setObject:maxAge forKey:NSHTTPCookieMaximumAge];
     
     NSHTTPCookie * cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    [wkWebView.configuration.websiteDataStore.httpCookieStore setCookie:cookie completionHandler:^{NSLog(@"Cookies synced");}];
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
