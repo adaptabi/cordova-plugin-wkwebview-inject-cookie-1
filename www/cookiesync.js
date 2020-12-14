@@ -22,7 +22,7 @@ module.exports = {
         for (var i = 0; i < cookiesArray.length; i++) {
             exec(successCallback, errorCallback, 'WKWebViewInjectCookie', 'injectCookie', [
                cookiesArray[i].domain,
-               cookiesArray[i].path ? cookiesArray[i].path : '/',
+               cookiesArray[i].path ? cookiesArray[i].path : '',
                cookiesArray[i].name,
                cookiesArray[i].value,
                cookiesArray[i].secure ? cookiesArray[i].secure : true,
